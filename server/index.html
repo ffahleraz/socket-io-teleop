@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      button { width: 200px; height: 150px; background: rgb(130, 224, 255); border: 5px; padding: 10px; }
+    </style>
+  </head>
+  <body>
+    <button id="r-left">r-left</button>
+    <button id="t-front">t-front</button>
+    <button id="r-right">r-right</button>
+    <br>
+    <button id="t-left">t-left</button>
+    <button id="t-back">t-back</button>
+    <button id="t-right">t-right</button>
+    <br>
+    <button id="stop">stop</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io('/user');
+        $(':button').mousedown(function(){
+          socket.emit('command', { code: this.id });
+        });
+        socket.on('alert', function(msg){
+          alert(msg.message);
+        });
+      });
+    </script>
+  </body>
+</html>
